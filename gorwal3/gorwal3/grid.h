@@ -15,6 +15,7 @@ public:
 	grid(string filename);
 	bool success;
 	matrix<char> puzzle;
+	int size;
 };
 
 #endif //GRID_H

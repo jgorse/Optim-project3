@@ -4,13 +4,15 @@
 
 using namespace std;
 int matches=0;
+int gridsize=0;
+
 void searchBase(string baseWord)
 {
 	if(baseWord.length() <5)
 		return;
 	string substr="";
 	bool match = false;
-	for(int i=5; i<16; i++)
+	for(int i=5; i<gridsize+1; i++)
 	{
 		substr = baseWord.substr(0, i);
 		
@@ -32,18 +34,19 @@ void findMatches(grid WordSearch) //Need to pass dictionary too
 	string baseWord = "";
 	string searchTerm = "";
 	int row=0, col=0; 
+	gridsize = WordSearch.size;
 
-	for(row=0; row<15; row++)
+	for(row=0; row<WordSearch.size; row++)
 	{
-		for(col=0; col<15; col++)
+		for(col=0; col<WordSearch.size; col++)
 		{
 			/***Search right from starting char***/
 			int searchcol = col;
 			int searchrow = row;
 			baseWord = "";
-			for(int count = 0; count < 15; count ++)
+			for(int count = 0; count < WordSearch.size; count ++)
 			{
-				if(searchcol == 15)
+				if(searchcol == WordSearch.size)
 					searchcol = 0;
 				baseWord += WordSearch.puzzle[row][searchcol];
 				searchcol++;
@@ -55,10 +58,10 @@ void findMatches(grid WordSearch) //Need to pass dictionary too
 			/***Search left from starting char***/
 			searchcol = col;
 			baseWord = "";
-			for(int count = 0; count < 15; count ++)
+			for(int count = 0; count < WordSearch.size; count ++)
 			{
 				if(searchcol == -1)
-					searchcol = 14;
+					searchcol = WordSearch.size-1;
 				baseWord += WordSearch.puzzle[row][searchcol];
 				searchcol--;
 			}
@@ -70,10 +73,10 @@ void findMatches(grid WordSearch) //Need to pass dictionary too
 			/***Search up from starting char***/
 			searchrow = row;
 			baseWord = "";
-			for(int count = 0; count < 15; count++)
+			for(int count = 0; count < WordSearch.size; count++)
 			{
 				if(searchrow == -1)
-					searchrow = 14;
+					searchrow = WordSearch.size-1;
 				baseWord += WordSearch.puzzle[searchrow][col];
 				searchrow--;
 			}
@@ -85,9 +88,9 @@ void findMatches(grid WordSearch) //Need to pass dictionary too
 			/***Search down from starting char***/
 			baseWord = "";
 			searchrow = row;
-			for(int count = 0; count < 15; count++)
+			for(int count = 0; count < WordSearch.size; count++)
 			{
-				if(searchrow == 15)
+				if(searchrow == WordSearch.size)
 					searchrow = 0;
 				baseWord += WordSearch.puzzle[searchrow][col];
 				searchrow++;
@@ -101,19 +104,19 @@ void findMatches(grid WordSearch) //Need to pass dictionary too
 			baseWord = "";
 			searchrow = row;
 			searchcol = col;
-			for(int count = 0; count < 15; count++)
+			for(int count = 0; count < WordSearch.size; count++)
 			{
-				if(searchrow == 15 && searchcol != 15)
+				if(searchrow == WordSearch.size && searchcol != WordSearch.size)
 				{
 					searchrow = abs(row-col);
 					searchcol = 0;
 				}	
-				if(searchcol == 15 && searchrow != 15)
+				if(searchcol == WordSearch.size && searchrow != WordSearch.size)
 				{
 					searchcol = abs(row-col);
 					searchrow = 0;
 				}
-				if(searchcol == 15 && searchrow == 15)
+				if(searchcol == WordSearch.size && searchrow == WordSearch.size)
 				{
 					searchcol = searchrow = 0;
 				}
@@ -135,22 +138,22 @@ void findMatches(grid WordSearch) //Need to pass dictionary too
 			baseWord = "";
 			searchrow = row;
 			searchcol = col;
-			for(int count = 0; count < 15; count++)
+			for(int count = 0; count < WordSearch.size; count++)
 			{
 				if(searchrow == -1 && searchcol != -1)
 				{
-					searchrow = 14-col+row;
-					searchcol = 14;
+					searchrow = WordSearch.size-1-col+row;
+					searchcol = WordSearch.size-1;
 				}	
 				if(searchcol == -1 && searchrow != -1)
 				{
-					searchcol = 14-row+col;
-					searchrow = 14;
+					searchcol = WordSearch.size-1-row+col;
+					searchrow = WordSearch.size-1;
 				}
 				if(searchcol == -1 && searchrow == -1)
 				{
-					searchrow = 14;
-					searchcol = 14;
+					searchrow = WordSearch.size-1;
+					searchcol = WordSearch.size-1;
 				}
 				
 				if(searchrow == row && searchcol == col && baseWord != "")
@@ -168,21 +171,21 @@ void findMatches(grid WordSearch) //Need to pass dictionary too
 			baseWord = "";
 			searchrow = row;
 			searchcol = col;
-			for(int count = 0; count < 15; count++)
+			for(int count = 0; count < WordSearch.size; count++)
 			{
-				if(searchrow == -1 && searchcol != 15)
+				if(searchrow == -1 && searchcol != WordSearch.size)
 				{
 					searchrow = row+col;
 					searchcol = 0;
 				}	
-				if(searchcol == 15 && searchrow != -1)
+				if(searchcol == WordSearch.size && searchrow != -1)
 				{
 					searchcol = searchrow+1;
-					searchrow = 14;
+					searchrow = WordSearch.size-1;
 				}
-				if(searchcol == 15 && searchrow == -1)
+				if(searchcol == WordSearch.size && searchrow == -1)
 				{
-					searchrow = 14;
+					searchrow = WordSearch.size-1;
 					searchcol = 0;
 				}
 				
@@ -202,22 +205,22 @@ void findMatches(grid WordSearch) //Need to pass dictionary too
 			baseWord = "";
 			searchrow = row;
 			searchcol = col;
-			for(int count = 0; count < 15; count++)
+			for(int count = 0; count < WordSearch.size; count++)
 			{
-				if(searchrow == 15 && searchcol != -1)
+				if(searchrow == WordSearch.size && searchcol != -1)
 				{
 					searchrow = searchcol+1;
-					searchcol = 14;
+					searchcol = WordSearch.size-1;
 				}	
-				if(searchcol == -1 && searchrow != 15)
+				if(searchcol == -1 && searchrow != WordSearch.size)
 				{
 					searchcol = row+col;
 					searchrow = 0;
 				}
-				if(searchcol == -1 && searchrow == 15)
+				if(searchcol == -1 && searchrow == WordSearch.size)
 				{
 					searchrow = 0;
-					searchcol = 14;
+					searchcol = WordSearch.size-1;
 				}
 				
 				if(searchrow == row && searchcol == col && baseWord != "")
@@ -238,9 +241,9 @@ void findMatches(grid WordSearch) //Need to pass dictionary too
 
 void testSearch()
 {
-	string filename = "input15.txt";
-	//cout<<"Enter filename for grid: ";
-	//cin>>filename;
+	string filename;// = "input50.txt";
+	cout<<"Enter filename for grid: ";
+	cin>>filename;
 
 	grid puzzle(filename);
 

@@ -5,7 +5,7 @@ using namespace std;
 
 grid::grid(string filename)
 {
-	puzzle.resize(15,15);
+	
 	success = false;
 
 	ifstream fin;
@@ -16,6 +16,7 @@ grid::grid(string filename)
 		return;
 	}
 	char x;
+	string s="";
 
 	//read first 4 characters (size of grid)
 	for(int i=0; i<4; i++)
@@ -23,12 +24,16 @@ grid::grid(string filename)
 		if(!fin.eof())
 		{
 			fin>>x;
+			s+=x;
 		}
 	}
+	s=s.substr(0,2);
+	size = (s[0]-48)*10 + (s[1]-48);
 
-	for(int i=0; i<15; i++)
+	puzzle.resize(size,size);
+	for(int i=0; i<size; i++)
 	{
-		for(int j=0; j<15; j++)
+		for(int j=0; j<size; j++)
 		{
 			if(!fin.eof())
 			{
