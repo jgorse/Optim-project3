@@ -9,5 +9,4 @@ public:
 	vector<string> dict;
 	dictionary();
 	bool search(string word);
-	
 };
