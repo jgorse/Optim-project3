@@ -1,10 +1,13 @@
 #include "grid.h"
 #include <iostream>
 #include <string>
+#include <time.h>
 
 using namespace std;
 int matches=0;
 int gridsize=0;
+clock_t starttime;
+clock_t endtime;
 
 void searchBase(string baseWord)
 {
@@ -241,9 +244,11 @@ void findMatches(grid WordSearch) //Need to pass dictionary too
 
 void testSearch()
 {
-	string filename;// = "input50.txt";
+	string filename;// = "input30.txt";
 	cout<<"Enter filename for grid: ";
 	cin>>filename;
+
+	starttime = clock();
 
 	grid puzzle(filename);
 
@@ -260,8 +265,17 @@ void testSearch()
 
 int main()
 {
+	
+    
+
 	testSearch();
 	cout<<"Matches found: "<<matches<<"\n";
+
+	endtime = clock();
+    cout << "Time required for execution: "
+    << (double)(endtime-starttime)/CLOCKS_PER_SEC
+    << " seconds." << "\n\n";
+
 	system("pause");
 	return 0;
 }
