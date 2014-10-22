@@ -1,4 +1,5 @@
 #include "grid.h"
+#include "dictionary.h"
 #include <iostream>
 #include <string>
 #include <time.h>
@@ -9,7 +10,7 @@ int gridsize=0;
 clock_t starttime;
 clock_t endtime;
 
-void searchBase(string baseWord)
+void searchBase(string baseWord, dictionary dict)
 {
 	if(baseWord.length() <5)
 		return;
@@ -19,8 +20,8 @@ void searchBase(string baseWord)
 	{
 		substr = baseWord.substr(0, i);
 		
-		//match = dict.search(substr);
-		//if(match)
+		match = dict.search(substr);
+		if(match)
 		{
 			cout<<substr<<"\n";
 			matches++;
@@ -32,13 +33,14 @@ void searchBase(string baseWord)
 	return;
 }
 
-void findMatches(grid WordSearch) //Need to pass dictionary too
+void findMatches(grid WordSearch, dictionary dict) //Need to pass dictionary too
 {
 	string baseWord = "";
 	string searchTerm = "";
 	int row=0, col=0; 
 	gridsize = WordSearch.size;
 
+	cout << "Doing wordsearch, matching strings found so far: \n";
 	for(row=0; row<WordSearch.size; row++)
 	{
 		for(col=0; col<WordSearch.size; col++)
@@ -55,7 +57,7 @@ void findMatches(grid WordSearch) //Need to pass dictionary too
 				searchcol++;
 			}
 			//cout<<baseWord<<"\n";
-			searchBase(baseWord);//pass dict too
+			searchBase(baseWord, dict);//pass dict too
 
 
 			/***Search left from starting char***/
@@ -69,7 +71,7 @@ void findMatches(grid WordSearch) //Need to pass dictionary too
 				searchcol--;
 			}
 			//cout<<baseWord<<"\n";
-			searchBase(baseWord);//pass dict too
+			searchBase(baseWord, dict);//pass dict too
 
 
 
@@ -84,7 +86,7 @@ void findMatches(grid WordSearch) //Need to pass dictionary too
 				searchrow--;
 			}
 			//cout<<baseWord<<"\n";
-			searchBase(baseWord);//pass dict too
+			searchBase(baseWord, dict);//pass dict too
 
 
 
@@ -99,7 +101,7 @@ void findMatches(grid WordSearch) //Need to pass dictionary too
 				searchrow++;
 			}
 			//cout<<baseWord<<"\n";
-			searchBase(baseWord);//pass dict too
+			searchBase(baseWord, dict);//pass dict too
 
 
 
@@ -134,7 +136,7 @@ void findMatches(grid WordSearch) //Need to pass dictionary too
 				
 			}
 			//cout<<baseWord<<"\n";
-			searchBase(baseWord);//pass dict too
+			searchBase(baseWord, dict);//pass dict too
 
 
 			/***Search up-left from starting char***/
@@ -168,7 +170,7 @@ void findMatches(grid WordSearch) //Need to pass dictionary too
 
 			}
 			//cout<<baseWord<<"\n";
-			searchBase(baseWord);//pass dict too
+			searchBase(baseWord, dict);//pass dict too
 
 			/***Search up-right from starting char***/
 			baseWord = "";
@@ -201,7 +203,7 @@ void findMatches(grid WordSearch) //Need to pass dictionary too
 
 			}
 			//cout<<baseWord<<"\n";
-			searchBase(baseWord);//pass dict too
+			searchBase(baseWord, dict);//pass dict too
 
 
 			/***Search down-left from starting char***/
@@ -235,7 +237,7 @@ void findMatches(grid WordSearch) //Need to pass dictionary too
 
 			}
 			//cout<<baseWord<<"\n";
-			searchBase(baseWord);//pass dict too
+			searchBase(baseWord, dict);//pass dict too
 
 		}
 	}
@@ -258,16 +260,13 @@ void testSearch()
 		return;
 	}
 
-	//dictionary dict;
+	dictionary dict;
 
-	findMatches(puzzle);//pass dict too
+	findMatches(puzzle, dict);//pass dict too
 }
 
 int main()
 {
-	
-    
-
 	testSearch();
 	cout<<"Matches found: "<<matches<<"\n";
 
