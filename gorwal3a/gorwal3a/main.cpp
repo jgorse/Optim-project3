@@ -10,27 +10,25 @@ int gridsize=0;
 clock_t starttime;
 clock_t endtime;
 
-void searchBase(string baseWord, dictionary dict)
+void searchBase(string* baseWord, dictionary* dict)
 {
-	if(baseWord.length() <5)
+	if(baseWord->length() <5)
 		return;
 	string substr="";
 	bool match = false;
 	for(int i=5; i<gridsize+1; i++)
 	{
-		substr = baseWord.substr(0, i);
+		substr = baseWord->substr(0, i);
 		
-		match = dict.search(substr);
+		match = dict->search(substr);
 		if(match)
 		{
 			cout<<substr<<"\n";
 			matches++;
 		}
-		if(substr==baseWord)
+		if(substr==*baseWord)
 			break;
 	}
-
-	return;
 }
 
 void findMatches(grid WordSearch, dictionary dict)
@@ -40,7 +38,7 @@ void findMatches(grid WordSearch, dictionary dict)
 	int row=0, col=0; 
 	gridsize = WordSearch.size;
 
-	cout << "Doing wordsearch (this will take a very long time, matching strings found so far: \n";
+	cout << "Doing wordsearch. Matching strings found so far: \n";
 	for(row=0; row<WordSearch.size; row++)
 	{
 		for(col=0; col<WordSearch.size; col++)
@@ -57,7 +55,7 @@ void findMatches(grid WordSearch, dictionary dict)
 				searchcol++;
 			}
 			//cout<<baseWord<<"\n";
-			searchBase(baseWord, dict); 
+			searchBase(&baseWord, &dict); 
 
 
 			/***Search left from starting char***/
@@ -71,7 +69,7 @@ void findMatches(grid WordSearch, dictionary dict)
 				searchcol--;
 			}
 			//cout<<baseWord<<"\n";
-			searchBase(baseWord, dict); 
+			searchBase(&baseWord, &dict); 
 
 
 
@@ -86,7 +84,7 @@ void findMatches(grid WordSearch, dictionary dict)
 				searchrow--;
 			}
 			//cout<<baseWord<<"\n";
-			searchBase(baseWord, dict); 
+			searchBase(&baseWord, &dict); 
 
 
 
@@ -101,7 +99,7 @@ void findMatches(grid WordSearch, dictionary dict)
 				searchrow++;
 			}
 			//cout<<baseWord<<"\n";
-			searchBase(baseWord, dict); 
+			searchBase(&baseWord, &dict); 
 
 
 
@@ -136,7 +134,7 @@ void findMatches(grid WordSearch, dictionary dict)
 				
 			}
 			//cout<<baseWord<<"\n";
-			searchBase(baseWord, dict); 
+			searchBase(&baseWord, &dict); 
 
 
 			/***Search up-left from starting char***/
@@ -170,7 +168,7 @@ void findMatches(grid WordSearch, dictionary dict)
 
 			}
 			//cout<<baseWord<<"\n";
-			searchBase(baseWord, dict); 
+			searchBase(&baseWord, &dict); 
 
 			/***Search up-right from starting char***/
 			baseWord = "";
@@ -203,7 +201,7 @@ void findMatches(grid WordSearch, dictionary dict)
 
 			}
 			//cout<<baseWord<<"\n";
-			searchBase(baseWord, dict); 
+			searchBase(&baseWord, &dict); 
 
 
 			/***Search down-left from starting char***/
@@ -237,7 +235,7 @@ void findMatches(grid WordSearch, dictionary dict)
 
 			}
 			//cout<<baseWord<<"\n";
-			searchBase(baseWord, dict); 
+			searchBase(&baseWord, &dict); 
 
 		}
 	}
@@ -246,9 +244,9 @@ void findMatches(grid WordSearch, dictionary dict)
 
 void testSearch()
 {
-	string filename;// = "input30.txt";
-	cout<<"Enter filename for grid: ";
-	cin>>filename;
+	string filename = "input15.txt";
+	//cout<<"Enter filename for grid: ";
+	//cin>>filename;
 
 	starttime = clock();
 
@@ -262,7 +260,8 @@ void testSearch()
 
 	dictionary dict;
 
-	findMatches(puzzle, dict); 
+	findMatches(puzzle, dict); 	
+	
 }
 
 int main()
@@ -270,10 +269,12 @@ int main()
 	testSearch();
 	cout<<"Matches found: "<<matches<<"\n";
 
+	
 	endtime = clock();
     cout << "Time required for execution: "
     << (double)(endtime-starttime)/CLOCKS_PER_SEC
     << " seconds." << "\n\n";
+	
 
 	system("pause");
 	return 0;
