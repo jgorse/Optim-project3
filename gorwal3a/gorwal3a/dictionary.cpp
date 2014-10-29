@@ -31,9 +31,9 @@ dictionary::dictionary()
 
 	//sort vector
 	cout<<"Sorting dictionary...";
-	sort(dict.begin(), dict.end()); //This is the std sort method in <algorithm>
-	//quickSort(0, dict.size()-1);; //This is the quicksort implemented by us
-	cout<<"done\n";
+	//sort(dict.begin(), dict.end()); //This is the std sort method in <algorithm>
+	quickSort(0, dict.size()-1);; //This is the quicksort implemented by us
+	cout<<"done.\n";
 
 }
 

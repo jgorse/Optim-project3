@@ -244,9 +244,9 @@ void findMatches(grid WordSearch, dictionary dict)
 
 void testSearch()
 {
-	string filename = "input15.txt";
-	//cout<<"Enter filename for grid: ";
-	//cin>>filename;
+	string filename; //= "input15.txt";
+	cout<<"Enter filename for grid: ";
+	cin>>filename;
 
 	starttime = clock();
 
